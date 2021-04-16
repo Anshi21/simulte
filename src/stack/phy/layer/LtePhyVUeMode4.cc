@@ -1363,7 +1363,7 @@ void LtePhyVUeMode4::decodeAirFrame(LteAirFrame* frame, UserControlInfo* lteInfo
 
                 }
 
-                //Case2: >1 Receivers have chosen same <subframe, subchannel> combination
+                //Case2: >1 Senders have chosen same <subframe, subchannel> combination
                 if(!senderReceiver)
                 {
                     std::vector<cPacket *>::iterator it;
@@ -1374,11 +1374,11 @@ void LtePhyVUeMode4::decodeAirFrame(LteAirFrame* frame, UserControlInfo* lteInfo
                       int otherChannel = sciInfo->getSubchannelNumber() ;
 
                       Coord myCoord = getCoord();
-                      Coord senderCoord = sciInfo->getCoord();
-                      int d = myCoord.distance(lteInfo->getCoord());
+                      Coord senderCoord1 = lteInfo->getCoord();
+                      Coord senderCoord2 = sciInfo->getCoord();
+                      int d = senderCoord2.distance(lteInfo->getCoord());
 
-                      if(lteInfo->getSubchannelNumber() ==  otherChannel && d < 701)
-//                      beyond 700m distance packet reception is almost zero
+                      if(lteInfo->getSubchannelNumber() ==  otherChannel && d < 301)
                       {
                           lteInfo->setDeciderResult(false);
                           tbFailedDueToCol_ = 1;
